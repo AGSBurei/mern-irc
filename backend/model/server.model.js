@@ -63,6 +63,4 @@ const serverSchema = new Schema({
     timestamps: true,
 });
 
-const Server = mongoose.model('Server', serverSchema);
-
-module.exports = Server;
+module.exports = mongoose.model('Server', serverSchema);
