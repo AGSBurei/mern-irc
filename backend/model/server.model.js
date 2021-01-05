@@ -8,23 +8,23 @@ const serverSchema = new mongoose.Schema({
     },
     role: [{
         _idRole: {
-            type : ObjectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'Role'
         },
     }],
     collectionOfFolder: [{
         _idFolder: {
-            type : ObjectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'Folder'
         },
     }],
     collectionOfUser: [{
         _idUser: { 
-            type : ObjectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
         },
         _idRole: {
-            type : ObjectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'Role'
         },
     }],

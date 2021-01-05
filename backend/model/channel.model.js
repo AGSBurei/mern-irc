@@ -8,7 +8,7 @@ const channelSchema = new mongoose.Schema({
     },
     message: [{
         _idUser: {
-            type : ObjectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
         },
         msg: {

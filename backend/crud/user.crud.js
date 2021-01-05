@@ -1,17 +1,12 @@
-const user = require('../model/user.model.js');
+const User = require('../model/user.model.js');
 
 module.exports = (app) => {
-    app.post('/user', async(req, res) =>{
-        if(!req.body) {
-            res.status(400).send({
-                message: "user content can not be empty"
-            });
-        }
-        await user.create(res.body);
+    app.post('/User', async(req, res) =>{
+        
     });
 
-    app.get('/user', async(req, res) =>{
-        await user.find().then(r => {
+    app.get('/User', async(req, res) =>{
+        await User.find().then(r => {
             res.status(200).send(r);
         }).catch(err => {
             res.status(500).send({
@@ -20,18 +15,18 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/user/:id', async(req, res) =>{
-        await user.findById(req.params.id).then(r => {
+    app.get('/User/:id', async(req, res) =>{
+        await User.findById(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the user"
+                    message: "Can't find the User"
                 });            
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the user"
+                    message: "Can't find the User"
                 });                
             }
             res.status(500).send({
@@ -40,24 +35,24 @@ module.exports = (app) => {
         });
     });
 
-    app.put('/user/:id', async(req, res) =>{
+    app.put('/User/:id', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "user content can not be empty"
+                message: "User content can not be empty"
             });
         }
 
-        await user.findByIdAndUpdate(req.params.id, req.body).then(r => {
+        await User.findByIdAndUpdate(req.params.id, req.body).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the user"
+                    message: "Can't find the User"
                 });
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the user"
+                    message: "Can't find the User"
                 });                
             }
             res.status(500).send({
@@ -66,20 +61,20 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/user/:id', async(req, res) =>{
-        await user.findByIdAndRemove(req.params.id).then(r => {
+    app.delete('/User/:id', async(req, res) =>{
+        await User.findByIdAndRemove(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the user"
+                    message: "Can't find the User"
                 });
             }
             res.status(200).send({
-                message: "user deleted successfully!"
+                message: "User deleted successfully!"
             });
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 res.status(404).send({
-                    message: "Can't find the user"
+                    message: "Can't find the User"
                 });                
             }
             res.status(500).send({

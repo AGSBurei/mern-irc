@@ -1,17 +1,17 @@
-const channel = require('../model/channel.model.js');
+const Channel = require('../model/channel.model.js');
 
 module.exports = (app) => {
-    app.post('/channel', async(req, res) =>{
+    app.post('/Channel', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "channel content can not be empty"
+                message: "Channel content can not be empty"
             });
         }
-        await channel.create(res.body);
+        await Channel.create(rep.body);
     });
 
-    app.get('/channel', async(req, res) =>{
-        await channel.find().then(r => {
+    app.get('/Channel', async(req, res) =>{
+        await Channel.find().then(r => {
             res.status(200).send(r);
         }).catch(err => {
             res.status(500).send({
@@ -20,18 +20,18 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/channel/:id', async(req, res) =>{
-        await channel.findById(req.params.id).then(r => {
+    app.get('/Channel/:id', async(req, res) =>{
+        await Channel.findById(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the channel"
+                    message: "Can't find the Channel"
                 });            
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the channel"
+                    message: "Can't find the Channel"
                 });                
             }
             res.status(500).send({
@@ -40,24 +40,24 @@ module.exports = (app) => {
         });
     });
 
-    app.put('/channel/:id', async(req, res) =>{
+    app.put('/Channel/:id', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "channel content can not be empty"
+                message: "Channel content can not be empty"
             });
         }
 
-        await channel.findByIdAndUpdate(req.params.id, req.body).then(r => {
+        await Channel.findByIdAndUpdate(req.params.id, req.body).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the channel"
+                    message: "Can't find the Channel"
                 });
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the channel"
+                    message: "Can't find the Channel"
                 });                
             }
             res.status(500).send({
@@ -66,20 +66,20 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/channel/:id', async(req, res) =>{
-        await channel.findByIdAndRemove(req.params.id).then(r => {
+    app.delete('/Channel/:id', async(req, res) =>{
+        await Channel.findByIdAndRemove(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the channel"
+                    message: "Can't find the Channel"
                 });
             }
             res.status(200).send({
-                message: "channel deleted successfully!"
+                message: "Channel deleted successfully!"
             });
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 res.status(404).send({
-                    message: "Can't find the channel"
+                    message: "Can't find the Channel"
                 });                
             }
             res.status(500).send({

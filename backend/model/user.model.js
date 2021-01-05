@@ -18,18 +18,20 @@ const userSchema = new mongoose.Schema({
         minlength: 8
     },
     imageName: {
-        type: String
+        type: String,
+        required: false
     },
     isActive: {
         type: Boolean,
-        require: true
+        default: false
     },
-    ListOfServer: {
-        _idServer: [{ 
-            type : ObjectId, 
-            ref: 'Server' 
-        }]
-    },
+    ListOfServer: [{
+        _idServer: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Server',
+            default: false
+        }
+    }],
 }, {
     timestamps: true,
 });

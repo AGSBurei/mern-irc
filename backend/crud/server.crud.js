@@ -1,17 +1,17 @@
-const server = require('../model/server.model.js');
+const Server = require('../model/server.model.js');
 
 module.exports = (app) => {
-    app.post('/server', async(req, res) =>{
+    app.post('/Server', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "server content can not be empty"
+                message: "Server content can not be empty"
             });
         }
-        await server.create(res.body);
+        await Server.create(rep.body);
     });
 
-    app.get('/server', async(req, res) =>{
-        await server.find().then(r => {
+    app.get('/Server', async(req, res) =>{
+        await Server.find().then(r => {
             res.status(200).send(r);
         }).catch(err => {
             res.status(500).send({
@@ -20,18 +20,18 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/server/:id', async(req, res) =>{
-        await server.findById(req.params.id).then(r => {
+    app.get('/Server/:id', async(req, res) =>{
+        await Server.findById(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the server"
+                    message: "Can't find the Server"
                 });            
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the server"
+                    message: "Can't find the Server"
                 });                
             }
             res.status(500).send({
@@ -40,24 +40,24 @@ module.exports = (app) => {
         });
     });
 
-    app.put('/server/:id', async(req, res) =>{
+    app.put('/Server/:id', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "server content can not be empty"
+                message: "Server content can not be empty"
             });
         }
 
-        await server.findByIdAndUpdate(req.params.id, req.body).then(r => {
+        await Server.findByIdAndUpdate(req.params.id, req.body).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the server"
+                    message: "Can't find the Server"
                 });
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the server"
+                    message: "Can't find the Server"
                 });                
             }
             res.status(500).send({
@@ -66,20 +66,20 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/server/:id', async(req, res) =>{
-        await server.findByIdAndRemove(req.params.id).then(r => {
+    app.delete('/Server/:id', async(req, res) =>{
+        await Server.findByIdAndRemove(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the server"
+                    message: "Can't find the Server"
                 });
             }
             res.status(200).send({
-                message: "server deleted successfully!"
+                message: "Server deleted successfully!"
             });
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 res.status(404).send({
-                    message: "Can't find the server"
+                    message: "Can't find the Server"
                 });                
             }
             res.status(500).send({

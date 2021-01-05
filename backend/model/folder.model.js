@@ -8,7 +8,7 @@ const folderSchema = new mongoose.Schema({
     },
     channel: [{
         _idChannel: {
-            type : ObjectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'Channel'
         },
     }]

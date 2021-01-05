@@ -1,17 +1,17 @@
-const role = require('../model/role.model.js');
+const Role = require('../model/role.model.js');
 
 module.exports = (app) => {
-    app.post('/role', async(req, res) =>{
+    app.post('/Role', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "role content can not be empty"
+                message: "Role content can not be empty"
             });
         }
-        await role.create(res.body);
+        await Role.create(rep.body);
     });
 
-    app.get('/role', async(req, res) =>{
-        await role.find().then(r => {
+    app.get('/Role', async(req, res) =>{
+        await Role.find().then(r => {
             res.status(200).send(r);
         }).catch(err => {
             res.status(500).send({
@@ -20,18 +20,18 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/role/:id', async(req, res) =>{
-        await role.findById(req.params.id).then(r => {
+    app.get('/Role/:id', async(req, res) =>{
+        await Role.findById(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the role"
+                    message: "Can't find the Role"
                 });            
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the role"
+                    message: "Can't find the Role"
                 });                
             }
             res.status(500).send({
@@ -40,24 +40,24 @@ module.exports = (app) => {
         });
     });
 
-    app.put('/role/:id', async(req, res) =>{
+    app.put('/Role/:id', async(req, res) =>{
         if(!req.body) {
             res.status(400).send({
-                message: "role content can not be empty"
+                message: "Role content can not be empty"
             });
         }
 
-        await role.findByIdAndUpdate(req.params.id, req.body).then(r => {
+        await Role.findByIdAndUpdate(req.params.id, req.body).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the role"
+                    message: "Can't find the Role"
                 });
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
-                    message: "Can't find the role"
+                    message: "Can't find the Role"
                 });                
             }
             res.status(500).send({
@@ -66,20 +66,20 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/role/:id', async(req, res) =>{
-        await role.findByIdAndRemove(req.params.id).then(r => {
+    app.delete('/Role/:id', async(req, res) =>{
+        await Role.findByIdAndRemove(req.params.id).then(r => {
             if(!r) {
                 res.status(404).send({
-                    message: "Can't find the role"
+                    message: "Can't find the Role"
                 });
             }
             res.status(200).send({
-                message: "role deleted successfully!"
+                message: "Role deleted successfully!"
             });
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 res.status(404).send({
-                    message: "Can't find the role"
+                    message: "Can't find the Role"
                 });                
             }
             res.status(500).send({
