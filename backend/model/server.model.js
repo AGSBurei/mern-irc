@@ -1,63 +1,32 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-const serverSchema = new Schema({
-    servername: {
+const serverSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
-        minlength: 3
-    },
-    collectionOfFolder: {
-        type: String,
-        required: true,
-        unique: true,
         minlength: 3
     },
     role: [{
-        name: { 
-            type: String,
-            required: true,
-            minlength: 3 
-        }
+        _idRole: {
+            type : ObjectId, 
+            ref: 'Role'
+        },
     }],
     collectionOfFolder: [{
-        folderName: {
-            type: String,
-            required: true,
-            minlength: 3
+        _idFolder: {
+            type : ObjectId, 
+            ref: 'Folder'
         },
-        channel: [{
-            channelName: {
-                type: String,
-                required: true,
-                minlength: 3
-            },
-            message: [{
-                _idUser: {
-                    type : ObjectId, 
-                    ref: 'User'
-                },
-                msg: {
-                    type: String
-                },
-                datetime: {
-                    type: Date, 
-                    default: Date.now
-                }
-            }]
-        }]
     }],
     collectionOfUser: [{
         _idUser: { 
             type : ObjectId, 
             ref: 'User'
         },
-        role: { 
-            type: String,
-            required: true,
-            minlength: 3 
-        }
+        _idRole: {
+            type : ObjectId, 
+            ref: 'Role'
+        },
     }],
 }, {
     timestamps: true,
