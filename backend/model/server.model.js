@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const serverSchema = new mongoose.Schema({
+    owner:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    },    
     name: {
         type: String,
         required: true,

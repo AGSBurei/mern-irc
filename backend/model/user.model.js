@@ -3,19 +3,16 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        minlength: 3
+        required: true
     },
     mail: {
         type: String,
         required: true,
-        unique: true,
-        minlength: 3
+        unique: true
     },
     password: {
         type: String,
-        required: true,
-        minlength: 8
+        required: true
     },
     imageName: {
         type: String,
@@ -28,8 +25,7 @@ const userSchema = new mongoose.Schema({
     ListOfServer: [{
         _idServer: { 
             type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Server',
-            default: false
+            ref: 'Server'
         }
     }],
 }, {
