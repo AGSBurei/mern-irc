@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const sendMail = require('../sendMail');
 
 module.exports = (app) => {
-    app.post('/User', async(req, res) =>{       
+    app.post('/User', async(req, res) =>{
         if(!req.body){
             res.status(400).send({
                 message: "Please complete all fields"
@@ -33,7 +33,7 @@ module.exports = (app) => {
 
     app.post('/User/login', async(req,res) =>{
         await User.find({email: req.body.email}).then(async(data) => {
-            if(data.length != 0){
+            if(data.length !== 0){
                 data.forEach(async(p) => {
                     if(await bcrypt.compare(req.body.password, p.password)){
                         res.status(200).send({
@@ -50,7 +50,7 @@ module.exports = (app) => {
                     message: "The mail or the password is wrong1"
                 });
             }
-                        
+
         }).catch(err => {
             res.status(500).send({
                 message: "Some error occurred"
@@ -72,7 +72,7 @@ module.exports = (app) => {
             res.status(200).send('<div><h1>Your account is active</h1><h2>Click <a href="http://localhost:3000/chat">here</a> to return to the site</h2></div><style>body{background-color: #777777;overflow: hidden;display: flex;align-items: center;justify-content: center;}div{margin-bottom: 200px;}</style>');
         }).catch(err => {
             if(err.kind === 'ObjectId') {
-                res.status(404).send("Can't find the User");                
+                res.status(404).send("Can't find the User");
             }
             res.status(500).send("Some error occurred");
         });
@@ -83,14 +83,14 @@ module.exports = (app) => {
             if(!r) {
                 res.status(404).send({
                     message: "Can't find the User"
-                });            
+                });
             }
             res.status(200).send(r);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
                     message: "Can't find the User"
-                });                
+                });
             }
             res.status(500).send({
                 message: "Some error occurred"
@@ -116,7 +116,7 @@ module.exports = (app) => {
             if(err.kind === 'ObjectId') {
                 res.status(404).send({
                     message: "Can't find the User"
-                });                
+                });
             }
             res.status(500).send({
                 message: "Some error occurred"
@@ -138,7 +138,7 @@ module.exports = (app) => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 res.status(404).send({
                     message: "Can't find the User"
-                });                
+                });
             }
             res.status(500).send({
                 message: "Some error occurred"

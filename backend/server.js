@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
 
+const socketIO = require('socket.io');
 require('dotenv').config();
 
 const app = express();
@@ -20,10 +21,29 @@ const server =  app.listen(port, async() => {
     console.log(`Port: ${port}`);
 });
 
-const io = require("socket.io")(server);
-
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
-    });
+const io = require('socket.io')(server, {
+    path: '/',
+    serveClient: false,
+    pingInterval:10000,
+    pingTimeout: 5000,
+    cookie: false,
+    cors: {
+        origin: "*",
+        methods:["GET", "POST"],
+    }
 });
+io.on("connection", (socket) => {
+    console.log("New client connected to socket");
+    socket.on("disconnect", () => {
+        console.log("disconnect", () =>{
+            console.log("client disconnected");
+        })
+    })
+})
+const getApiAndEmit = socket => {
+    const response = new Date();
+    // Emitting a new message. Will be consumed by the client
+    socket.emit("FromAPI", response);
+};
+
+
