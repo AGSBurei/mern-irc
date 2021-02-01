@@ -1,11 +1,12 @@
 import * as React from "react";
 import './Chat.css';
-
+import io from "socket.io-client";
 
 const chat = () => {
-    //const chatID = res.params.id
-    
-    return(
+    const socket = io("http://localhost:5000");
+    socket.emit('chat message', "hello");
+
+    return (
         <div>
             <div className="navBar">
                 <div class="server">
@@ -39,7 +40,7 @@ const chat = () => {
                     </div>
                 </div>
 
-                <div class="chat"> 
+                <div class="chat">
                     <div id="message">
                         <div class="contain">
 
@@ -59,7 +60,7 @@ const chat = () => {
 
                         </div>
                     </div>
-                    <from class="input" onsubmit="sendSocketIO()">
+                    <from class="input">
                         <input type="text" placeholder="Type your message"></input>
                     </from>
                 </div>
@@ -76,7 +77,7 @@ const chat = () => {
                 </div>
             </div>
         </div>
-    )   
+    )
 }
 
 export default chat;

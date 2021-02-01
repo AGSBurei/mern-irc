@@ -15,7 +15,15 @@ app.use(bodyParser.json());
 require('./initDB.js')();
 require("./route.js")(app);
 
-app.listen(port, async() => {
+const server =  app.listen(port, async() => {
     console.log('Server: Start')
     console.log(`Port: ${port}`);
+});
+
+const io = require("socket.io")(server);
+
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+    });
 });
