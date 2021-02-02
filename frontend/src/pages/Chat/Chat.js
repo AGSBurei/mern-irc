@@ -3,8 +3,15 @@ import './Chat.css';
 import io from "socket.io-client";
 
 const chat = () => {
-    const socket = io("http://localhost:5000");
-    socket.emit('chat message', "hello");
+    const socket = new io("http://localhost:5000");
+    socket.onopen(() => {
+        socket.emit('example_message', 'demo');
+    });
+
+    const sendSocketIO= () => {
+        socket.emit('example_message', 'demo');
+    }
+
 
     return (
         <div>
@@ -12,7 +19,7 @@ const chat = () => {
                 <div class="server">
                     <div>
                         <div class="image">
-                            <img src="https://via.placeholder.com/150C/O"></img>
+                            <img src="https://via.placeholder.com/150C/O" alt="placeholder"/>
                         </div>
 
                         <div class="name">
@@ -32,7 +39,7 @@ const chat = () => {
                     </div>
                     <div class="user">
                         <div class="image">
-                            <img src="https://via.placeholder.com/150C/O"></img>
+                            <img src="https://via.placeholder.com/150C/O" alt="placeholder"/>
                         </div>
                         <div class="name">
                             <label>eto.senpai</label>
@@ -46,7 +53,7 @@ const chat = () => {
 
                             <div class="msg">
                                 <div class="image">
-                                    <img src="https://via.placeholder.com/150C/O"></img>
+                                    <img src="https://via.placeholder.com/150C/O" alt="placeholder"/>
                                 </div>
                                 <div class="data">
                                     <div class="info">
@@ -61,14 +68,17 @@ const chat = () => {
                         </div>
                     </div>
                     <from class="input">
-                        <input type="text" placeholder="Type your message"></input>
+                        <input type="text" placeholder="Type your message"/>
+                        <button onClick={sendSocketIO}>send</button>
                     </from>
+
                 </div>
 
                 <div class="userList">
                     <div>
                         <div class="image">
-                            <img src="https://via.placeholder.com/150C/O"></img>
+                            <img src="https://via.placeholder.com/150C/O" alt="placeholder"/>
+
                         </div>
                         <div class="name">
                             <label>eto.senpai</label>
