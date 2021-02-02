@@ -1,0 +1,126 @@
+body {
+    overflow: hidden;
+    background-image: url("./fondIRC.jpg");
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container .main {
+    background-color: #5a5a5a;
+    margin-left: -25%;
+    height: 511px;
+    width: 862px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px #171717;
+    display: flex;
+}
+
+.container .main .input {
+    width: 60%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: 20% 80%;
+}
+
+.container .main .input .title{
+    display: flex;
+}
+
+.container .main .image {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.email, .password, .name{
+    display: grid;
+    margin-top: 15px;
+}
+
+label {
+    color: #FFFFFF;
+}
+
+.image img {
+    width: 283px;
+    height: 267px;
+}
+
+.title img {
+    width: 127px;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.title label {
+    color: #FFFFFF;
+    font-size: 36px;
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+#login .button {
+    margin-top: 176px;
+}
+
+#signup .button {
+    margin-top: 20px;
+}
+
+.button button {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.button label, .button .show {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+.button .show {
+    color: #0d5e94 !important;
+    margin-right: 0px !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    width: auto !important;
+}
+
+.button .show:focus { 
+    outline: none; 
+}
+
+input {
+    width: 400px;
+    height: 36px;
+    outline: none;
+}
+
+input[type="email"], input[type="password"], input[type="text"]{
+    font-size:20px;
+    padding-left: 10px !important;
+}
+
+button {
+    width: 249px;
+    height: 48px;
+    font-size: 26px;
+}
+
+#login {
+    height: 100%;
+    display: none;
+}
+
+#signup {
+    height: 100%;
+}
