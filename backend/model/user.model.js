@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    ListOfServer: [{
+    listOfServer: [{
         _idServer: { 
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Server'
