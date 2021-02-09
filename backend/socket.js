@@ -20,30 +20,34 @@ module.exports = (server) => {
     });
 
     io.on("connection", (socket) => {
-        //initialization 
-        Server.find().then(async(server) =>{
-            await server.forEach(async(s) => {
-                await s.message.forEach(async(m) => {
-                    const u = await User.findById(m._id);
-                    io.emit("message", s._id, m.msg, u.name);
-                });
-            });
-        })
-
         //join
-        socket.on('join', (room) => {
-            socket.join(room);
+        socket.on('join', (room, session) => {
+            const messageList = new Array();
+            Server.findById(room).then(async(server) =>{
+                await server.message.forEach(async(m) => {
+                    const u = await User.findById(m._id);
+                    messageList.push({msg: m.msg, username: u.name});
+                    io.emit(session, "messageList", messageList);
+                });
+            })
         });
 
         //message
         socket.on("message", async(_idServer, message, user) => {
             if(message != null || message != ""){
                 await Server.findByIdAndUpdate(_idServer, { $push: {message:{_id: user, msg: message}}}).then(async(r) => {
-                    const u = await User.findById(user);
-                    io.emit("message", _idServer, message, u.name);
+                    const messageList = new Array();
+                    Server.findById(_idServer).then(async(s) =>{
+                        await s.message.forEach(async(m) => {
+                            const u = await User.findById(m._id);
+                            messageList.push({msg: m.msg, username: u.name});
+                            io.emit("newMessage", messageList);
+                        });
+                    });
                 });
             }
-        })
+        });
+
 
         //signup
         socket.on('signup', async (name, email, password, passwordConfirm, session) => {
@@ -164,11 +168,13 @@ module.exports = (server) => {
                 return;
             }else{
                 const user = await User.findById(_idUser);
+                const serverList = new Array();
 
                 user.listOfServer.forEach(async(server) => {
                     const serverName = await Server.findById(server._id);
-                    io.emit(session, "serverList", {_idServer: server._id, name: serverName.name});
-                });
+                    serverList.push({_idServer: server._id, name: serverName.name}); 
+                    io.emit(session, "serverList", serverList);
+                });               
                 return;
             }
         });
@@ -180,10 +186,12 @@ module.exports = (server) => {
                 return;
             }else{
                 const server = await Server.findById(_idServer);
+                const serverUser = new Array();
 
                 server.collectionOfUser.forEach(async(e) => {
                     const user = await User.findById(e._id);
-                    io.emit(session, "serverUser", user.name);
+                    serverUser.push({name: user.name})
+                    io.emit(session, "serverUser", serverUser);
                 });
                 return;
             }

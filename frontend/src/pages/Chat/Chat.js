@@ -8,7 +8,6 @@ const chat = () => {
     // user data
     let _idUser;
     let name;
-    let ListOfServer;
 
     // server
     let _idServer;
@@ -29,12 +28,8 @@ const chat = () => {
     }
 
     const changeServer = () => {
-        document.getElementById("userList").innerHTML = '';
-        document.getElementById("msg").innerHTML = '';
-
         socket.emit('serverUser', _idServer, result);
-
-        socket.emit('join', _idServer);
+        socket.emit('join', _idServer, result);
     }
 
     window.addEventListener("click", (e) => {
@@ -44,8 +39,59 @@ const chat = () => {
         }
     });
 
-    socket.on("message", (server, message, name) => {
-        if (server == _idServer) {
+    const sendMessage = () => {
+        const message = document.getElementById("sendMessage").value;
+        const regex = "/";
+        const commands = ["/create", "/delete", "/join", "/quit", "/info"]
+        if(message.search(regex) == 0){
+            commands.forEach(c => {
+                if(message.search(c) == 0){
+                    switch (c) {
+                        case "/create":
+                            socket.emit("server", _idUser, message, result);
+                            break;
+
+                        case "/delete":
+                            
+                            break;
+
+                        case "/join":
+                            
+                            break;
+
+                        case "/quit":
+                            
+                            break;
+
+                        case "/info":
+                            if(_idServer != "" || _idServer != null){
+                                swal("server id", _idServer, "info")
+                            }
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    socket.emit(c, message.replace(c+" ", ""), result);
+                }
+            });
+        }else{
+            socket.emit("message", _idServer, message, _idUser, result);
+        }
+        document.getElementById("sendMessage").value = "";
+    }
+
+    session();
+
+    if (localStorage.getItem("token") != null || localStorage.getItem("token") != "") {
+        socket.emit('token', localStorage.getItem("token"), result);
+    } else {
+        window.location.replace("http://localhost:3000/");
+    }
+
+    socket.on("newMessage", (message) => {
+        document.getElementById("msg").innerHTML = '';
+        message.forEach(e => {
             let messageList = document.createElement("li");
             let div1 = document.createElement("div");
             let img = document.createElement("img");
@@ -63,50 +109,76 @@ const chat = () => {
             div3.className = "info";
             div4.className = "message";
             label1.className = "username";
-            label1.innerText = name;
-            label3.innerText = message;
-            
+            label1.innerText = e.username;
+            label3.innerText = e.msg;
+
             div1.appendChild(img);
             div3.appendChild(label1);
             div4.appendChild(label3);
             div2.appendChild(div3);
             div2.appendChild(div4);
-            
+
             messageList.appendChild(div1);
             messageList.appendChild(div2);
 
-            console.log(message)
-
-            document.getElementById("msg").appendChild(messageList);            
-        }
+            document.getElementById("msg").appendChild(messageList);
+        });
     })
-
-    const sendMessage = () => {
-        socket.emit("message", _idServer, document.getElementById("sendMessage").value, _idUser);
-    }
-
-    session();
-
-    if (localStorage.getItem("token") != null || localStorage.getItem("token") != "") {
-        socket.emit('token', localStorage.getItem("token"), result);
-    } else {
-        window.location.replace("http://localhost:3000/");
-    }
 
     socket.on(result, (request, message) => {
         if (message == "removeToken") {
             localStorage.removeItem("token");
             window.location.replace("http://localhost:3000/");
         } else {
+            
             switch (request) {
                 case "error", "success":
                     swal(request, message, request);
                     break;
 
+                case "refreshedServer":
+                    serverList();
+                    break;
+
+                case "messageList":
+                    document.getElementById("msg").innerHTML = '';
+                    message.forEach(e => {
+                        let messageList = document.createElement("li");
+                        let div1 = document.createElement("div");
+                        let img = document.createElement("img");
+                        let div2 = document.createElement("div");
+                        let div3 = document.createElement("div");
+                        let div4 = document.createElement("div");
+                        let label1 = document.createElement("label");
+                        let label3 = document.createElement("label");
+
+                        div1.className = "image";
+                        img.src = "https://via.placeholder.com/150C/O";
+                        img.alt = "placeholder";
+
+                        div2.className = "data";
+                        div3.className = "info";
+                        div4.className = "message";
+                        label1.className = "username";
+                        label1.innerText = e.username;
+                        label3.innerText = e.msg;
+
+                        div1.appendChild(img);
+                        div3.appendChild(label1);
+                        div4.appendChild(label3);
+                        div2.appendChild(div3);
+                        div2.appendChild(div4);
+
+                        messageList.appendChild(div1);
+                        messageList.appendChild(div2);
+
+                        document.getElementById("msg").appendChild(messageList);
+                    });
+                    break;
+
                 case "login":
                     _idUser = message._id;
                     name = message.name;
-                    ListOfServer = message.ListOfServer;
 
                     serverList();
 
@@ -114,41 +186,48 @@ const chat = () => {
                     break;
 
                 case "serverList":
-                    let listServer = document.createElement("li");
-                    let button = document.createElement("button");
+                    document.getElementById("serverList").innerHTML = '';
+                    message.forEach(e => {
+                        let listServer = document.createElement("li");
+                        let button = document.createElement("button");
 
-                    button.id = message._idServer;
-                    button.innerText = message.name;
-                    button.className = "serverName";
+                        button.id = e._idServer;
+                        button.innerText = e.name;
+                        button.className = "serverName";
 
-                    listServer.appendChild(button)
+                        listServer.appendChild(button)
 
-                    document.getElementById("serverList").appendChild(listServer);
+                        document.getElementById("serverList").appendChild(listServer);
+                    });
                     break;
 
                 case "serverUser":
-                    let userList = document.createElement("li");
+                    document.getElementById("userList").innerHTML = '';
 
-                    let div1 = document.createElement("div");
-                    let div2 = document.createElement("div");
+                    message.forEach(e => {
+                        let userList = document.createElement("li");
 
-                    let img = document.createElement("img");
-                    let label = document.createElement("label");
+                        let div1 = document.createElement("div");
+                        let div2 = document.createElement("div");
 
-                    div1.className = "image";
-                    div2.className = "name";
+                        let img = document.createElement("img");
+                        let label = document.createElement("label");
 
-                    img.src = "https://via.placeholder.com/150C/O";
-                    img.alt = "placeholder";
-                    label.innerText = message;
+                        div1.className = "image";
+                        div2.className = "name";
 
-                    div1.appendChild(img);
-                    div2.appendChild(label);
+                        img.src = "https://via.placeholder.com/150C/O";
+                        img.alt = "placeholder";
+                        label.innerText = e.name;
 
-                    userList.appendChild(div1);
-                    userList.appendChild(div2);
+                        div1.appendChild(img);
+                        div2.appendChild(label);
 
-                    document.getElementById("userList").appendChild(userList);
+                        userList.appendChild(div1);
+                        userList.appendChild(div2);
+
+                        document.getElementById("userList").appendChild(userList);
+                    });
                     break;
 
                 default:
@@ -156,11 +235,6 @@ const chat = () => {
             }
         }
     });
-
-
-
-    // socket.emit('server', id, "World");
-
 
     return (
         <div>
@@ -176,17 +250,17 @@ const chat = () => {
                             <img src="https://via.placeholder.com/150C/O" alt="placeholder" />
                         </div>
                         <div id="name" class="name">
-                            
+
                         </div>
                     </div>
                 </div>
 
                 <div class="chat">
                     <div id="message">
-                        <div class="contain">
+                        <div class="contain" id="contain">
                             <div class="msg">
                                 <ul id="msg">
-                                    
+
                                 </ul>
                             </div>
                         </div>
