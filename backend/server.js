@@ -45,5 +45,8 @@ const getApiAndEmit = socket => {
     // Emitting a new message. Will be consumed by the client
     socket.emit("FromAPI", response);
 };
+io.on('example_message', function (msg){
+    console.log('message: ' + msg)
+})
 
 
