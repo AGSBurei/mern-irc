@@ -2,60 +2,9 @@ body {
     overflow: hidden;
 }
 
-/* navbar */
-.navBar {
-    background-color: #777777;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 7vh; 
-    border-bottom: 0.2vh solid #333333;
-}
-
-.navBar .server {
-    background-color: #5A5A5A;
-    max-width: 16.5%;
-    min-width: 300px;
-    height: 100%;
-    border-bottom: 2px solid #333333c5;
-}
-
-.navBar .server div {
-    padding-top: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.navBar .server .image img {
-    width: 60px;
-    height: 60px;
-    clip-path:ellipse(50% 50%);
-}
-
-.navBar .server .name {
-    margin-left: 35px;
-    margin-right: 25px;
-}
-
-.navBar .server .name label {
-    color: #FFFFFF;
-
-}
-
-.navBar .server .drope label {
-    color: #FFFFFF;
-    font-size: 16px;
-    transform: scale(1.3, 1);
-}
-
-.navBar .server .drope :hover{
-    cursor: pointer;
-}
-
 /* body */
 .body {
-    height: 92.8vh;
+    height: 100vh;
     width: 100%;
     display: flex;
 }
@@ -87,6 +36,27 @@ body {
     clip-path:ellipse(50% 50%);
     margin-right: 10px;
     margin-left: 10px;
+}
+
+#serverList {
+    display: grid;
+}
+
+.serverName {
+    border: none;
+    background: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-align: left;
+    margin: 10px;
+}
+
+.serverName:focus { 
+    outline: none; 
+}
+
+.serverName:hover { 
+    color: blue; 
 }
 
 /* chat */
@@ -136,6 +106,10 @@ body {
 .body .chat #message .contain .msg .image img{
     width: 50px;
     clip-path:ellipse(50% 50%);
+}
+
+#msg {
+    display: grid;
 }
 
 /* input */
@@ -193,6 +167,13 @@ body {
     margin-left: 10px;
 }
 
+#userList {
+    display: grid;
+}
+
+#userList li{
+    display: flex;
+}
 
 /* scrollbar */
 ::-webkit-scrollbar-track
@@ -215,3 +196,9 @@ body {
 	background-color: #4b4b4b;
 }
 
+li {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    display: flex;
+}

@@ -10,27 +10,24 @@ const serverSchema = new mongoose.Schema({
         required: true,
         minlength: 3
     },
-    role: [{
-        _idRole: {
+    message: [{
+        _idUser: {
             type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Role'
+            ref: 'User'
         },
-    }],
-    collectionOfFolder: [{
-        _idFolder: {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Folder'
+        msg: {
+            type: String
         },
+        datetime: {
+            type: Date, 
+            default: Date.now
+        }
     }],
     collectionOfUser: [{
         _idUser: { 
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
-        },
-        _idRole: {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Role'
-        },
+        }
     }],
 }, {
     timestamps: true,
