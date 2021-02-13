@@ -7,19 +7,19 @@ const login = () => {
             <div class="main">
                 <div class="input">
                     <div class="title">
-                        <img src="./anti-rain.png" alt="anti-rain"></img>
+                        <img src="./anti-rain.png" alt="anti-rain"/>
                         <label>ANTI RAIN</label>
                     </div>
 
                     <div id="login">
                         <div class="email">
                             <label for="email">E-Mail</label>
-                            <input type="email" name="email" autoComplete="off"></input>
+                            <input type="email" name="email" autoComplete="off"/>
                         </div>
 
                         <div class="password">
-                            <label for="password" >Passord</label>
-                            <input type="password" name="password" autoComplete="off"></input>
+                            <label for="password" >Password</label>
+                            <input type="password" name="password" autoComplete="off"/>
                         </div>
 
                         <div class="button">
@@ -31,22 +31,22 @@ const login = () => {
                     <div id="signup">
                         <div class="name">
                             <label for="name">Name</label>
-                            <input type="text" name="name" autoComplete="off"></input>
+                            <input type="text" name="name" autoComplete="off"/>
                         </div>
 
                         <div class="email">
                             <label for="email">E-Mail</label>
-                            <input type="email" name="email" autoComplete="off"></input>
+                            <input type="email" name="email" autoComplete="off"/>
                         </div>
 
                         <div class="password">
                             <label for="password">Passord</label>
-                            <input type="password" name="password" autoComplete="off"></input>
+                            <input type="password" name="password" autoComplete="off"/>
                         </div>
 
                         <div class="password">
                             <label for="password-confirm">Confirm passord</label>
-                            <input type="password" name="password-confirm" autoComplete="off"></input>
+                            <input type="password" name="password-confirm" autoComplete="off"/>
                         </div>
 
                         <div class="button">
@@ -57,7 +57,7 @@ const login = () => {
                 </div>
 
                 <div class="image">
-                    <img src="./a10.png" alt="image"></img>
+                    <img src="./a10.png" alt="image"/>
                 </div>
             </div>
         </div>
